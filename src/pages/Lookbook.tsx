@@ -2,7 +2,15 @@ import { COLLECTIONS } from '../constants';
 import { motion } from 'motion/react';
 import { Archive } from 'lucide-react';
 
-export default function Lookbook() {
+interface LookbookProps {
+  setActivePage?: (page: string) => void;
+}
+
+export default function Lookbook({ setActivePage }: LookbookProps) {
+  const handleShopLine = () => {
+    setActivePage?.('shop');
+  };
+
   return (
     <div className="pt-32 pb-24">
       <header className="px-6 md:px-12 mb-32 max-w-screen-2xl mx-auto">
@@ -43,7 +51,10 @@ export default function Lookbook() {
                   {collection.description}
                 </p>
                 <div className="flex flex-wrap gap-6">
-                  <button className="px-8 py-4 bg-primary text-white font-sans text-[10px] uppercase tracking-widest font-bold hover:bg-primary-container transition-all">
+                  <button 
+                    onClick={handleShopLine}
+                    className="px-8 py-4 bg-primary text-white font-sans text-[10px] uppercase tracking-widest font-bold hover:bg-primary-container transition-all"
+                  >
                     Shop the Line
                   </button>
                   <button className="px-8 py-4 border-b border-outline-variant text-on-surface font-sans text-[10px] uppercase tracking-widest font-bold hover:text-primary transition-colors">

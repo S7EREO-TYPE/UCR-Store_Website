@@ -88,7 +88,7 @@ export default function App() {
       case 'shop':
         return <Shop onProductClick={handleProductClick} />;
       case 'lookbook':
-        return <Lookbook />;
+        return <Lookbook setActivePage={setActivePage} />;
       case 'journey':
         return <Journey />;
       default:

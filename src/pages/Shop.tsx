@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { PRODUCTS } from '../constants';
 import ProductCard from '../components/ProductCard';
 import { Product } from '../types';
-import { motion } from 'motion/react';
+import { smoothScrollToTop } from '../utils';
 
 interface ShopProps {
   onProductClick: (product: Product) => void;
@@ -60,7 +60,7 @@ export default function Shop({ onProductClick }: ShopProps) {
           You've reached the end of our current seasonal curation. New arrivals drop monthly.
         </p>
         <button 
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onClick={smoothScrollToTop}
           className="bg-primary text-white px-12 py-4 font-sans text-xs font-bold tracking-[0.2em] uppercase hover:bg-primary-container transition-all"
         >
           Back to Top

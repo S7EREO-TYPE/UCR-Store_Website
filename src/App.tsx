@@ -15,7 +15,8 @@ import ProductDetail from './pages/ProductDetail';
 import Checkout from './pages/Checkout';
 import { Product, CartItem } from './types';
 import CartDrawer from './components/CartDrawer';
-import { motion, AnimatePresence } from 'motion/react';
+import { AnimatePresence } from 'motion/react';
+import { scrollToTop } from './utils';
 
 export default function App() {
   const [activePage, setActivePage] = useState('home');
@@ -26,7 +27,7 @@ export default function App() {
 
   // Scroll to top on page change
   useEffect(() => {
-    window.scrollTo(0, 0);
+    scrollToTop();
   }, [activePage, selectedProduct]);
 
   const handleAddToCart = (product: Product, size: string) => {
@@ -98,6 +99,31 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header 
+        onMenuClick={() => setIsMenuOpen(!isMenuOpen)}
+        onCartClick={() => setIsCartOpen(!isCartOpen)}
+        activePage={activePage}
+        setActivePage={setActivePage}
+        cartCount={cartItems.length}
+      />
+      <AnimatePresence>
+        {isCartOpen && (
+          <CartDrawer 
+            cartItems={cartItems}
+            onRemoveItem={handleRemoveFromCart}
+            onClose={() => setIsCartOpen(false)}
+            onCheckout={() => {
+              setIsCartOpen(false);
+              setActivePage('checkout');
+            }}
+          />
+        )}
+      </AnimatePresence>
+      <main className="flex-grow">{renderPage()}</main>
+      <Footer />
+      <BottomNav activePage={activePage} setActivePage={setActivePage} />
+    </div>
+  );
+}
         onMenuClick={() => setIsMenuOpen(true)} 
         onCartClick={() => setIsCartOpen(true)} 
         activePage={activePage}

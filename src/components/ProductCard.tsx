@@ -1,10 +1,10 @@
 import { Product } from '../types';
 import { motion } from 'motion/react';
+import { formatCurrency } from '../utils';
 
 interface ProductCardProps {
   product: Product;
   onClick: (product: Product) => void;
-  key?: string;
 }
 
 export default function ProductCard({ product, onClick }: ProductCardProps) {
@@ -39,7 +39,7 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
           <h3 className="text-2xl font-serif italic mb-1">{product.name}</h3>
           <p className="text-[10px] tracking-[0.2em] text-on-surface-variant uppercase">{product.collection}</p>
         </div>
-        <p className="text-lg font-sans font-medium">${product.price.toFixed(2)}</p>
+        <p className="text-lg font-sans font-medium">{formatCurrency(product.price)}</p>
       </div>
     </motion.div>
   );

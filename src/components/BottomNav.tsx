@@ -1,22 +1,23 @@
 import { Home, Grid, BookOpen, History } from 'lucide-react';
+import { NAV_ITEMS } from '../utils';
 
 interface BottomNavProps {
   activePage: string;
   setActivePage: (page: string) => void;
 }
 
-export default function BottomNav({ activePage, setActivePage }: BottomNavProps) {
-  const navItems = [
-    { id: 'home', label: 'Home', icon: Home },
-    { id: 'shop', label: 'Shop', icon: Grid },
-    { id: 'lookbook', label: 'Lookbook', icon: BookOpen },
-    { id: 'journey', label: 'Journey', icon: History },
-  ];
+const ICON_MAP: Record<string, React.ComponentType<any>> = {
+  home: Home,
+  shop: Grid,
+  lookbook: BookOpen,
+  journey: History,
+};
 
+export default function BottomNav({ activePage, setActivePage }: BottomNavProps) {
   return (
     <nav className="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 bg-surface border-t border-outline-variant/20 px-4">
-      {navItems.map((item) => {
-        const Icon = item.icon;
+      {NAV_ITEMS.map((item) => {
+        const Icon = ICON_MAP[item.id];
         const isActive = activePage === item.id;
         return (
           <button

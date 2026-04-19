@@ -4,6 +4,7 @@ import { PRODUCTS } from '../constants';
 import ProductCard from '../components/ProductCard';
 import { ChevronLeft, Download, ShieldCheck, Truck } from 'lucide-react';
 import { useState } from 'react';
+import { formatCurrency } from '../utils';
 
 interface ProductDetailProps {
   product: Product;
@@ -16,7 +17,6 @@ export default function ProductDetail({ product, onBack, onProductClick, onAddTo
   const [selectedSize, setSelectedSize] = useState('M');
   const [activeImage, setActiveImage] = useState(product.image);
   const relatedProducts = PRODUCTS.filter(p => p.id !== product.id).slice(0, 4);
-
   const detailImages = product.secondaryImage 
     ? [product.secondaryImage, product.image] 
     : [product.image, product.image, product.image];
@@ -70,7 +70,7 @@ export default function ProductDetail({ product, onBack, onProductClick, onAddTo
             Archive {'>'} Outerwear
           </p>
           <h1 className="text-5xl md:text-7xl mb-6">{product.name}</h1>
-          <p className="text-2xl font-sans font-medium mb-12">${product.price.toFixed(2)}</p>
+          <p className="text-2xl font-sans font-medium mb-12">{formatCurrency(product.price)}</p>
           
           <p className="text-on-surface-variant text-lg leading-relaxed mb-12">
             {product.description}
@@ -141,7 +141,7 @@ export default function ProductDetail({ product, onBack, onProductClick, onAddTo
               <p className="text-[10px] font-bold tracking-widest uppercase text-on-surface-variant/60">Goes to Heritage Fund</p>
             </div>
             <div>
-              <p className="text-4xl font-serif italic text-primary mb-2">$45K</p>
+              <p className="text-4xl font-serif italic text-primary mb-2">R45K</p>
               <p className="text-[10px] font-bold tracking-widest uppercase text-on-surface-variant/60">Raised This Year</p>
             </div>
           </div>

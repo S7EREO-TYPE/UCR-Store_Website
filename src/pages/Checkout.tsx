@@ -2,6 +2,7 @@ import { CartItem } from '../types';
 import { motion } from 'motion/react';
 import { ChevronLeft, ShieldCheck } from 'lucide-react';
 import { useState } from 'react';
+import { calculateCartTotal, formatCurrency } from '../utils';
 
 interface CheckoutProps {
   cartItems: CartItem[];
@@ -13,9 +14,8 @@ interface CheckoutProps {
 export default function Checkout({ cartItems, onBack, onClearCart, onExploreMore }: CheckoutProps) {
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const calculateSubtotal = () => cartItems.reduce((total, item) => total + (item.product.price * item.quantity), 0);
+  const subtotal = calculateCartTotal(cartItems);
   const shipping = 10.00;
-  const subtotal = calculateSubtotal();
   const total = subtotal + shipping;
 
   const handlePlaceOrder = (e: React.FormEvent) => {
@@ -23,7 +23,7 @@ export default function Checkout({ cartItems, onBack, onClearCart, onExploreMore
     setIsSuccess(true);
     setTimeout(() => {
       onClearCart();
-    }, 500); // clear after transition starts
+    }, 500);
   };
 
   if (isSuccess) {
@@ -170,7 +170,7 @@ export default function Checkout({ cartItems, onBack, onClearCart, onExploreMore
                   <div className="flex-1 text-sm">
                     <h4 className="font-medium text-primary mb-1">{item.product.name}</h4>
                     <p className="text-on-surface-variant text-xs mb-2">Size: {item.size} | Qty: {item.quantity}</p>
-                    <p className="font-bold">${(item.product.price * item.quantity).toFixed(2)}</p>
+                    <p className="font-bold">{formatCurrency(item.product.price * item.quantity)}</p>
                   </div>
                 </div>
               ))}
@@ -179,15 +179,15 @@ export default function Checkout({ cartItems, onBack, onClearCart, onExploreMore
             <div className="space-y-4 border-t border-outline-variant/20 pt-8 mb-8 text-sm">
               <div className="flex justify-between text-on-surface-variant">
                 <span>Subtotal</span>
-                <span>${subtotal.toFixed(2)}</span>
+                <span>{formatCurrency(subtotal)}</span>
               </div>
               <div className="flex justify-between text-on-surface-variant">
                 <span>Shipping</span>
-                <span>${shipping.toFixed(2)}</span>
+                <span>{formatCurrency(shipping)}</span>
               </div>
               <div className="flex justify-between text-lg font-bold text-primary pt-4 border-t border-outline-variant/20">
                 <span>Total</span>
-                <span>${total.toFixed(2)}</span>
+                <span>{formatCurrency(total)}</span>
               </div>
             </div>
 

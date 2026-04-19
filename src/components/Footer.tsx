@@ -35,12 +35,14 @@ export default function Footer() {
         </div>
 
         <div className="pt-12 border-t border-outline-variant/30 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-medium tracking-widest uppercase text-on-surface-variant/60">
-          <p>© 2024 UPPER CAMPUS RESIDENCE</p>
+          <div className="flex flex-col items-center md:items-start gap-2">
+            <p>©2026 UPPER CAMPUS RESIDENCE</p>
+            <p>CREATED BY MUNASHE CHIIMBA</p>
+          </div>
           <div className="flex gap-8">
             <button className="hover:text-primary transition-colors">Privacy Policy</button>
             <button className="hover:text-primary transition-colors">Terms</button>
           </div>
-          <p>Global Archive Delivery</p>
         </div>
       </div>
     </footer>

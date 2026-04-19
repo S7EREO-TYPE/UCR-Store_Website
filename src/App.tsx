@@ -125,7 +125,7 @@ export default function App() {
               <div className="flex justify-between items-center mb-12">
                 <div className="flex items-center gap-3">
                   <img src="/images/Logo.png" alt="Logo" className="h-8 w-auto object-contain" />
-                  <h2 className="font-serif italic text-2xl text-primary">UPPER CAMPUS</h2>
+                  <h2 className="font-serif italic text-2xl text-primary">UCR</h2>
                 </div>
                 <button 
                   onClick={() => setIsMenuOpen(false)}

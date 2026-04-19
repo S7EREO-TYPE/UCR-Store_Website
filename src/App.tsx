@@ -15,8 +15,8 @@ import ProductDetail from './pages/ProductDetail';
 import Checkout from './pages/Checkout';
 import { Product, CartItem } from './types';
 import CartDrawer from './components/CartDrawer';
-import { AnimatePresence } from 'motion/react';
-import { scrollToTop } from './utils';
+import { AnimatePresence, motion } from 'motion/react';
+import { scrollToTop, NAV_ITEMS } from './utils';
 
 export default function App() {
   const [activePage, setActivePage] = useState('home');
@@ -105,6 +105,58 @@ export default function App() {
         setActivePage={setActivePage}
         cartCount={cartItems.length}
       />
+      <AnimatePresence>
+        {isMenuOpen && (
+          <div className="fixed inset-0 z-[60]">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMenuOpen(false)}
+              className="absolute inset-0 bg-on-surface/20 backdrop-blur-sm"
+            />
+            <motion.aside 
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="absolute left-0 top-0 h-full w-80 bg-surface shadow-[20px_0px_50px_rgba(26,28,28,0.06)] flex flex-col p-8 gap-6"
+            >
+              <div className="flex justify-between items-center mb-12">
+                <div className="flex items-center gap-3">
+                  <img src="/images/Logo.png" alt="Logo" className="h-8 w-auto object-contain" />
+                  <h2 className="font-serif italic text-2xl text-primary">UPPER CAMPUS</h2>
+                </div>
+                <button 
+                  onClick={() => setIsMenuOpen(false)}
+                  className="p-2 hover:bg-surface-container-low rounded-full transition-colors"
+                >
+                  <span className="material-symbols-outlined">close</span>
+                </button>
+              </div>
+              <nav className="flex flex-col gap-8">
+                {NAV_ITEMS.map((item) => (
+                  <button 
+                    key={item.id}
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      setActivePage(item.id);
+                    }}
+                    className="text-on-surface-variant/60 font-serif text-3xl tracking-tighter hover:text-primary hover:translate-x-2 transition-all duration-300 text-left"
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </nav>
+              
+              <div className="mt-auto pt-12 border-t border-outline-variant/20">
+                <p className="text-[10px] font-bold tracking-widest uppercase text-on-surface-variant/40 mb-4">Member Access</p>
+                <button className="text-sm font-medium hover:text-primary transition-colors">Login to Archive</button>
+              </div>
+            </motion.aside>
+          </div>
+        )}
+      </AnimatePresence>
       <AnimatePresence>
         {isCartOpen && (
           <CartDrawer 
